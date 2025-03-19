@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import client from './src/api/apolloClient';
 import store from './src/redux/store';
 import HomeScreen from './src/screens/HomeScreen';
-// import FavoritesScreen from './src/screens/FavoritesScreen';
+import FavoritesScreen from './src/screens/FavoritesScreen';
 // import AnimeDetailModal from './src/components/AnimeDetailModal';
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +36,7 @@ const App = () => {
               })}
             >
               <Tab.Screen name="Home" component={HomeScreen} />
-              {/* <Tab.Screen name="Favorites" component={FavoritesScreen} /> */}
+              <Tab.Screen name="Favorites" component={FavoritesScreen} />
             </Tab.Navigator>
             {/* <AnimeDetailModal /> */}
           </NavigationContainer>

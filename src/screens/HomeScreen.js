@@ -1,12 +1,13 @@
-import { View, Text, SectionList, FlatList, StyleSheet } from "react-native";
-// import { useSelector } from "react-redux";
+import { Text, FlatList, StyleSheet, ScrollView } from "react-native";
 import { useQuery } from "@apollo/client";
+import { useState, useCallback } from 'react';
 import { GET_TOP_ANIMES } from "../api/queries";
 import AnimeCard from "../components/AnimeCard";
-// import FilterBar from "../components/Filters/FiltersBar";
+import FiltersBar from "../components/Filters/FiltersBar";
+import { FILTERS } from "../utils/constants";
 
 const HomeScreen = () => {
-  // const { filters, filteredAnimes } = useSelector((state) => state.anime);
+  const [filters, setFilters] = useState(FILTERS);
   const { loading, error, data } = useQuery(GET_TOP_ANIMES, {
     variables: {
       season: "WINTER",
@@ -14,62 +15,48 @@ const HomeScreen = () => {
     },
   });
 
-  if (loading) return <Text style={styles.loadingText}>Loading...</Text>;
-  if (error)
-    return <Text style={styles.errorText}>Error: {error.message}</Text>;
+  const handleFilterChange = useCallback((newFilters) => {
+    setFilters(newFilters);
+  }, []);
 
-  const seasonAnimes = data.season.media;
-  const popularAnimes = data.popular.media;
-  
-  return (
-    <View style={styles.container}>
-      {/* <FilterBar /> */}
-      
-      {/* <SectionList
-        renderItem={({ item }) => <AnimeCard anime={item} />}
-        renderSectionHeader={({ section: { title } }) => (
-          <Text style={styles.sectionTitle}>{title}</Text>
-        )}
-        showsVerticalScrollIndicator={false}
-        stickySectionHeadersEnabled={false}
-        sections={[
-          {
-            title: "POPULAR THIS SEASON",
-            data: seasonAnimes,
-          },
-          {
-            title: "ALL TIME POPULAR",
-            data: popularAnimes,
-          },
-        ]}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={styles.listContainer}
-      /> */}
+  const renderContent = () => {
+    if (loading) return <Text style={styles.loadingText}>Loading...</Text>;
+    if (error) return <Text style={styles.errorText}>Error: {error.message}</Text>;
 
-      <Text style={styles.sectionTitle}>
-        POPULAR THIS SEASON
-      </Text>
-      <FlatList
-        data={seasonAnimes}
-        renderItem={({ item }) => <AnimeCard anime={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        scrollEnabled={false}
-        contentContainerStyle={styles.listContainer}
-      />
+    const seasonAnimes = data.season.media;
+    const popularAnimes = data.popular.media;
 
-      <Text style={styles.sectionTitle}>
-        ALL TIME POPULAR
-      </Text>
-      <FlatList
-        data={popularAnimes}
-        renderItem={({ item }) => <AnimeCard anime={item} />}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        contentContainerStyle={styles.listContainer}
-      />
-    </View>
-  );
+    return (
+      <ScrollView style={styles.container}>
+        <FiltersBar filters={filters} onFilterChange={handleFilterChange}/>
+        <Text style={styles.sectionTitle}>
+          POPULAR THIS SEASON
+        </Text>
+        <FlatList
+          data={seasonAnimes}
+          renderItem={({ item }) => <AnimeCard anime={item} />}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          contentContainerStyle={styles.listContainer}
+          scrollEnabled={false}
+        />
+
+        <Text style={styles.sectionTitle}>
+          ALL TIME POPULAR
+        </Text>
+        <FlatList
+          data={popularAnimes}
+          renderItem={({ item }) => <AnimeCard anime={item} />}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          contentContainerStyle={styles.listContainer}
+          scrollEnabled={false}
+        />
+      </ScrollView>
+    );
+  };
+
+  return renderContent();
 };
 
 const styles = StyleSheet.create({

@@ -22,7 +22,7 @@ export default function FavButton ({ animeInfo }) {
   return (
     <IconButton
       icon={isFavorite ? "heart" : "heart-outline"}
-      color={isFavorite? MD3Colors.red800 : MD3Colors.grey500}
+      color={isFavorite? MD3Colors.red800 : MD3Colors.red500}
       size={20}
       onPress={toggleFavorites}
     />

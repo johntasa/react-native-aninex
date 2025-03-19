@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { setSelectedAnime } from '../redux/animeSlice';
-import FavButton from './SetFavButton';
+import FavButton from './FavButton'
 
 const AnimeCard = ({ anime }) => {
   const dispatch = useDispatch();
