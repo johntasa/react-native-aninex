@@ -30,9 +30,9 @@ import {
               />
             </View>
             <UISelect id="genre" label="Genre" options={GENRES} value={filters.genre || "Any"} handleChange={handleChange} />
-            {/* <UISelect id="seasonYear" label="Year" options={YEARS} value={filters.seasonYear || "Any"} handleChange={handleChange} />
+            <UISelect id="seasonYear" label="Year" options={YEARS} value={filters.seasonYear || "Any"} handleChange={handleChange} />
             <UISelect id="status" label="Status" options={STATUSES} value={filters.status || "Any"} handleChange={handleChange} />
-            <UISelect id="season" label="Season" options={SEASONS} value={filters.season || "Any"} handleChange={handleChange} /> */}
+            <UISelect id="season" label="Season" options={SEASONS} value={filters.season || "Any"} handleChange={handleChange} />
           </View>
         </View>
       );
@@ -40,17 +40,18 @@ import {
     
 const styles = StyleSheet.create({
     container: {
-      marginTop: 24,
+      marginTop: 12,
       marginBottom: 8,
     },
     grid: {
-      flexDirection: 'column',
-      flexWrap: 'wrap',
-      justifyContent: 'space-between',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gap: 12,
     },
     label: {
       fontWeight: 'bold',
       marginBottom: 4,
+      color: '#8F8F8F',
     },
     input: {
       backgroundColor: 'white',
@@ -58,6 +59,6 @@ const styles = StyleSheet.create({
       borderRadius: 8,
       borderWidth: 1,
       borderColor: '#ddd',
-      width: 200,
+      width: '100%',
     },
 });

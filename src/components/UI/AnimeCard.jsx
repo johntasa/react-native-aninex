@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { setSelectedAnime } from '../redux/animeSlice';
+import { setSelectedAnime } from '../../redux/animeSlice';
 import FavButton from './FavButton'
 
 const AnimeCard = ({ anime }) => {
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
     fontWeight: '600',
+    color: '#8F8F8F'
   },
 });
 

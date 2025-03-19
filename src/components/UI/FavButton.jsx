@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { addToFavorites, removeFromFavorites } from "../redux/animeSlice";
-import { IconButton, MD3Colors } from 'react-native-paper';
+import { addToFavorites, removeFromFavorites } from "../../redux/animeSlice";
+import { IconButton } from 'react-native-paper';
 
 export default function FavButton ({ animeInfo }) {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ export default function FavButton ({ animeInfo }) {
   return (
     <IconButton
       icon={isFavorite ? "heart" : "heart-outline"}
-      color={isFavorite? MD3Colors.red800 : MD3Colors.red500}
+      iconColor="#FF0000"
       size={20}
       onPress={toggleFavorites}
     />
