@@ -1,20 +1,49 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { ApolloProvider } from '@apollo/client';
+import { Provider as ReduxProvider } from 'react-redux';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function App() {
+import client from './src/api/apolloClient';
+import store from './src/redux/store';
+import HomeScreen from './src/screens/HomeScreen';
+// import FavoritesScreen from './src/screens/FavoritesScreen';
+// import AnimeDetailModal from './src/components/AnimeDetailModal';
+
+const Tab = createBottomTabNavigator();
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ApolloProvider client={client}>
+      <ReduxProvider store={store}>
+        <SafeAreaProvider>
+          <NavigationContainer>
+            <Tab.Navigator
+              screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                  let iconName;
+                  if (route.name === 'Home') {
+                    iconName = 'home';
+                  } else if (route.name === 'Favorites') {
+                    iconName = 'favorite';
+                  }
+                  return <Icon name={iconName} size={size} color={color} />;
+                },
+                tabBarActiveTintColor: '#14b8a6', // teal-500
+                tabBarInactiveTintColor: 'gray',
+              })}
+            >
+              <Tab.Screen name="Home" component={HomeScreen} />
+              {/* <Tab.Screen name="Favorites" component={FavoritesScreen} /> */}
+            </Tab.Navigator>
+            {/* <AnimeDetailModal /> */}
+          </NavigationContainer>
+        </SafeAreaProvider>
+      </ReduxProvider>
+    </ApolloProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default App;
